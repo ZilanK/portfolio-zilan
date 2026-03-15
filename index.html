@@ -3,147 +3,616 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portfolio Zilan</title>
+<title>Zilan — Portfolio BTS SIO SLAM</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #fff9fb;
-    color: #333;
-    scroll-behavior: smooth;
-}
+  :root {
+    --rose: #c4687a;
+    --rose-light: #f7dde4;
+    --rose-deep: #8c3a4d;
+    --cream: #fdf6f8;
+    --ink: #1e1014;
+    --muted: #8a7178;
+    --white: #ffffff;
+    --card-shadow: 0 20px 60px rgba(140,58,77,0.10);
+  }
 
-header {
-    background: linear-gradient(to right, #f8dfe7, #fceff3);
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── CURSOR ── */
+  body { cursor: none; }
+  #cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--rose); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.15s, background 0.3s, width 0.3s, height 0.3s;
+    mix-blend-mode: multiply;
+  }
+  #cursor.big { width: 40px; height: 40px; background: rgba(196,104,122,0.25); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(253,246,248,0.82);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(196,104,122,0.12);
+    transition: padding 0.4s;
+  }
+  nav.scrolled { padding: 12px 48px; }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; color: var(--rose-deep);
+    letter-spacing: 0.02em;
+  }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    text-decoration: none; font-size: 13px; font-weight: 500;
+    color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+    position: relative; transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1.5px; background: var(--rose);
+    transform: scaleX(0); transform-origin: right;
+    transition: transform 0.35s ease;
+  }
+  .nav-links a:hover { color: var(--rose); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
     text-align: center;
-    padding: 50px 20px;
-}
+    padding: 0 24px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(196,104,122,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 10% 80%, rgba(247,221,228,0.5) 0%, transparent 60%),
+      var(--cream);
+  }
+  .hero-dots {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(circle, rgba(196,104,122,0.15) 1px, transparent 1px);
+    background-size: 36px 36px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 680px; }
+  .hero-tag {
+    display: inline-block;
+    background: var(--rose-light); color: var(--rose-deep);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 100px;
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 90px);
+    line-height: 1.04;
+    color: var(--ink);
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--rose);
+  }
+  .hero-sub {
+    margin-top: 20px; font-size: 16px; font-weight: 300;
+    color: var(--muted); line-height: 1.7;
+    opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+  }
+  .hero-cta {
+    margin-top: 40px; display: inline-flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    opacity: 0; animation: fadeUp 0.7s 0.8s forwards;
+  }
+  .btn {
+    display: inline-block; padding: 14px 32px;
+    border-radius: 100px; font-size: 13px; font-weight: 500;
+    letter-spacing: 0.06em; text-decoration: none;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .btn:hover { transform: translateY(-3px); }
+  .btn-primary {
+    background: var(--rose); color: white;
+    box-shadow: 0 8px 30px rgba(196,104,122,0.35);
+  }
+  .btn-primary:hover { box-shadow: 0 14px 40px rgba(196,104,122,0.45); }
+  .btn-ghost {
+    border: 1.5px solid rgba(196,104,122,0.4); color: var(--rose);
+  }
+  .btn-ghost:hover { background: var(--rose-light); }
 
-header h1 {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
+  .scroll-hint {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+    opacity: 0; animation: fadeUp 1s 1.2s forwards;
+  }
+  .scroll-hint .line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--rose), transparent);
+    animation: lineGrow 1.5s 1.5s ease infinite;
+  }
 
-nav {
-    background: white;
-    padding: 15px;
-    position: sticky;
-    top: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* ── SECTIONS ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section.section { padding: 100px 0; }
+  .section-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 20px;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 24px; height: 1.5px; background: var(--rose);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 50px); line-height: 1.15;
+    color: var(--ink); margin-bottom: 48px;
+  }
+
+  /* ── REVEAL ── */
+  .reveal { opacity: 1; transform: translateY(0); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.hidden { opacity: 0; transform: translateY(40px); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── PROFIL ── */
+  .profil-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+  }
+  .profil-card {
+    background: white; border-radius: 24px;
+    padding: 40px; box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196,104,122,0.08);
+  }
+  .profil-text { font-size: 16px; line-height: 1.9; color: #4a3840; }
+  .profil-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+  }
+  .stat-box {
+    background: var(--rose-light); border-radius: 16px; padding: 20px;
     text-align: center;
-}
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif; font-size: 36px;
+    color: var(--rose-deep); display: block;
+  }
+  .stat-lab { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #b76e79;
-    font-weight: bold;
-    transition: 0.3s;
-}
+  /* ── FORMATION ── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--rose), var(--rose-light));
+  }
+  .tl-item { position: relative; margin-bottom: 36px; }
+  .tl-dot {
+    position: absolute; left: -32px; top: 5px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--rose); border: 3px solid var(--cream);
+    box-shadow: 0 0 0 3px rgba(196,104,122,0.25);
+  }
+  .tl-year {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--rose); margin-bottom: 6px;
+  }
+  .tl-title { font-size: 17px; font-weight: 500; color: var(--ink); }
+  .tl-sub { font-size: 14px; color: var(--muted); margin-top: 4px; }
 
-nav a:hover {
-    color: #e89cab;
-}
+  /* ── COMPÉTENCES ── */
+  .skills-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+  .skill-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 100px;
+    font-size: 13px; font-weight: 500;
+    background: white; border: 1.5px solid rgba(196,104,122,0.15);
+    color: var(--ink); box-shadow: 0 2px 10px rgba(196,104,122,0.06);
+    transition: all 0.3s;
+  }
+  .skill-pill:hover {
+    background: var(--rose); color: white; border-color: var(--rose);
+    transform: translateY(-3px); box-shadow: 0 8px 20px rgba(196,104,122,0.3);
+  }
+  .skill-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--rose); }
+  .skill-pill:hover .skill-dot { background: white; }
+  .skills-cat { margin-bottom: 12px; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
 
-section {
-    max-width: 900px;
-    margin: 40px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  /* ── PROJETS ── */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;
+  }
+  .project-card {
+    background: white; border-radius: 20px;
+    padding: 32px; box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196,104,122,0.07);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(to right, var(--rose), #e8a0ad);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { transform: translateY(-8px); box-shadow: 0 30px 70px rgba(140,58,77,0.14); }
+  .project-num {
+    font-family: 'Playfair Display', serif; font-size: 40px;
+    color: var(--rose-light); line-height: 1; margin-bottom: 16px;
+    transition: color 0.3s;
+  }
+  .project-card:hover .project-num { color: rgba(196,104,122,0.25); }
+  .project-title { font-size: 20px; font-weight: 500; color: var(--ink); margin-bottom: 10px; }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px; }
+  .tag {
+    font-size: 11px; font-weight: 500; padding: 4px 12px;
+    border-radius: 100px; background: var(--rose-light); color: var(--rose-deep);
+  }
+
+  /* ── EXPÉRIENCES ── */
+  .xp-grid { display: grid; gap: 20px; }
+  .xp-card {
+    background: white; border-radius: 20px; padding: 28px 32px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196,104,122,0.07);
+    display: flex; align-items: center; gap: 24px;
     transition: transform 0.3s;
-}
+  }
+  .xp-card:hover { transform: translateX(6px); }
+  .xp-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--rose-light); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .xp-role { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .xp-where { font-size: 14px; color: var(--muted); margin-top: 4px; }
+  .xp-badge {
+    margin-left: auto; font-size: 11px; font-weight: 500;
+    padding: 5px 14px; border-radius: 100px;
+    background: var(--rose-light); color: var(--rose-deep); white-space: nowrap;
+  }
 
-section:hover {
-    transform: translateY(-5px);
-}
+  /* ── CONTACT ── */
+  #contact {
+    background: linear-gradient(135deg, var(--rose-deep) 0%, #b05060 100%);
+    padding: 100px 24px; text-align: center; position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute; top: -80px; right: -80px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  #contact::after {
+    content: ''; position: absolute; bottom: -100px; left: -60px;
+    width: 250px; height: 250px; border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .contact-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .contact-title {
+    font-family: 'Playfair Display', serif; font-size: clamp(32px,5vw,52px);
+    color: white; margin-bottom: 16px;
+  }
+  .contact-sub { color: rgba(255,255,255,0.7); font-size: 16px; margin-bottom: 40px; }
+  .contact-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 100px; font-size: 13px;
+    font-weight: 500; text-decoration: none; transition: all 0.3s;
+  }
+  .contact-link.white { background: white; color: var(--rose-deep); }
+  .contact-link.white:hover { background: var(--rose-light); transform: translateY(-3px); }
+  .contact-link.outline { border: 1.5px solid rgba(255,255,255,0.4); color: white; }
+  .contact-link.outline:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
 
-h2 {
-    color: #b76e79;
-}
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 24px; font-size: 13px; color: var(--muted);
+    background: var(--cream);
+  }
+  footer span { color: var(--rose); }
 
-.project {
-    background: #fff3f6;
-    padding: 15px;
-    margin-top: 15px;
-    border-radius: 10px;
-    transition: 0.3s;
-}
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes lineGrow {
+    0%,100% { transform: scaleY(0); transform-origin: top; opacity: 0.5; }
+    50%      { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  }
 
-.project:hover {
-    background: #fde8ee;
-    transform: scale(1.02);
-}
-
-footer {
-    text-align: center;
-    padding: 20px;
-    background: #f8dfe7;
-    margin-top: 40px;
-}
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 16px; }
+    .profil-grid { grid-template-columns: 1fr; }
+    .xp-card { flex-direction: column; align-items: flex-start; }
+    .xp-badge { margin-left: 0; }
+  }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>Zilan - Portfolio BTS SIO SLAM</h1>
-    <p>Étudiante en 2ᵉ année de BTS SIO option SLAM | Développement web, mobile et cybersécurité</p>
-</header>
+<div id="cursor"></div>
 
-<nav>
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Zilan.</div>
+  <div class="nav-links">
     <a href="#profil">Profil</a>
     <a href="#formation">Formation</a>
-    <a href="#competences">Compétences</a>
+    <a href="#competences">Skills</a>
     <a href="#projets">Projets</a>
     <a href="#experiences">Expériences</a>
+    <a href="#contact">Contact</a>
+  </div>
 </nav>
 
-<section id="profil">
-    <h2>Qui suis-je</h2>
-    <p>Étudiante en deuxième année de BTS SIO option SLAM, je développe mes compétences en informatique à travers différents projets scolaires et professionnels.</p>
-</section>
-
-<section id="formation">
-    <h2>Formation</h2>
-    <p>BTS Services Informatiques aux Organisations - Option SLAM (2ᵉ année)</p>
-    <p>Bac STI2D option ITEC</p>
-</section>
-
-<section id="competences">
-    <h2>Compétences</h2>
-    <p>PHP • Java • HTML • CSS • SQL • Kotlin • Python</p>
-    <p>Outils : Laravel, Android Studio, Git, GitHub</p>
-</section>
-
-<section id="projets">
-    <h2>Projets</h2>
-
-    <div class="project">
-        <h3>Viva Bio</h3>
-        <p>Application web de gestion de stock et vente en ligne de produits bio.</p>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-content">
+    <span class="hero-tag">BTS SIO · Option SLAM · 2ᵉ année</span>
+    <h1 class="hero-title">Bonjour, je suis <em>Zilan</em></h1>
+    <p class="hero-sub">
+      Développeuse en devenir, passionnée par le web, le mobile<br>
+      et la cybersécurité. Je construis des solutions qui ont du sens.
+    </p>
+    <div class="hero-cta">
+      <a href="#projets" class="btn btn-primary">Voir mes projets</a>
+      <a href="#contact" class="btn btn-ghost">Me contacter</a>
     </div>
-
-    <div class="project">
-        <h3>Comeat</h3>
-        <p>Application Android de réservation de repas.</p>
-    </div>
-
-    <div class="project">
-        <h3>Station de décontamination USB</h3>
-        <p>Projet Raspberry Pi avec Python pour détecter les virus sur clés USB.</p>
-    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="line"></div>
+    scroll
+  </div>
 </section>
 
-<section id="experiences">
-    <h2>Expériences</h2>
-    <p>Stage cybersécurité SOC - BRED Banque Populaire</p>
-    <p>Stage développement web - MatelooKids</p>
+<!-- PROFIL -->
+<section class="section" id="profil">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Profil</div>
+      <h2 class="section-title">Qui suis-je ?</h2>
+    </div>
+    <div class="profil-grid reveal">
+      <div>
+        <p class="profil-text">
+          Étudiante en deuxième année de BTS SIO option SLAM, je développe mes compétences à travers des projets concrets — des applications web aux outils de cybersécurité. J'aime relever des défis techniques tout en gardant l'utilisateur au centre de chaque décision.
+        </p>
+        <p class="profil-text" style="margin-top: 16px;">
+          Mon parcours mêle développement, mobilité et sécurité informatique, avec des expériences en stage qui m'ont confrontée à des environnements professionnels exigeants.
+        </p>
+      </div>
+      <div class="profil-card">
+        <div class="profil-stats">
+          <div class="stat-box">
+            <span class="stat-num">3</span>
+            <div class="stat-lab">Projets majeurs</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">2</span>
+            <div class="stat-lab">Stages</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">7+</span>
+            <div class="stat-lab">Technologies</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">2ᵉ</span>
+            <div class="stat-lab">Année BTS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- FORMATION -->
+<section class="section" id="formation" style="background: white;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Formation</div>
+      <h2 class="section-title">Mon parcours</h2>
+    </div>
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2024 — 2026</div>
+        <div class="tl-title">BTS SIO — Option SLAM</div>
+        <div class="tl-sub">Services Informatiques aux Organisations · Développement web, mobile & cybersécurité</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-year">2022 — 2024</div>
+        <div class="tl-title">Bac STI2D — Option ITEC</div>
+        <div class="tl-sub">Innovation Technologique et Éco-Conception · Baccalauréat obtenu</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section class="section" id="competences">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Compétences</div>
+      <h2 class="section-title">Technologies & outils</h2>
+    </div>
+    <div class="reveal">
+      <div class="skills-cat">Langages</div>
+      <div class="skills-grid" style="margin-bottom: 28px;">
+        <span class="skill-pill"><span class="skill-dot"></span>PHP</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Java</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Kotlin</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Python</span>
+        <span class="skill-pill"><span class="skill-dot"></span>HTML</span>
+        <span class="skill-pill"><span class="skill-dot"></span>CSS</span>
+        <span class="skill-pill"><span class="skill-dot"></span>SQL</span>
+      </div>
+      <div class="skills-cat">Frameworks & outils</div>
+      <div class="skills-grid">
+        <span class="skill-pill"><span class="skill-dot"></span>Laravel</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Android Studio</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Git</span>
+        <span class="skill-pill"><span class="skill-dot"></span>GitHub</span>
+        <span class="skill-pill"><span class="skill-dot"></span>Raspberry Pi</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section class="section" id="projets" style="background: white;">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Projets</div>
+      <h2 class="section-title">Ce que j'ai construit</h2>
+    </div>
+    <div class="projects-grid reveal">
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-title">Viva Bio</div>
+        <p class="project-desc">Application web de gestion de stock et vente en ligne dédiée aux produits biologiques. Interface administrateur et boutique client.</p>
+        <div class="project-tags">
+          <span class="tag">PHP</span>
+          <span class="tag">Laravel</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Web</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-title">Comeat</div>
+        <p class="project-desc">Application Android de réservation de repas. Gestion des commandes, menus dynamiques et interface utilisateur fluide.</p>
+        <div class="project-tags">
+          <span class="tag">Kotlin</span>
+          <span class="tag">Android Studio</span>
+          <span class="tag">Mobile</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-title">Station USB</div>
+        <p class="project-desc">Station de décontamination USB basée sur Raspberry Pi. Détection automatique de fichiers malveillants via script Python.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">Cybersécurité</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-title">Alerte 802.1x · Splunk</div>
+        <p class="project-desc">Détection et configuration d'alertes sur des tentatives d'authentification réseau (802.1x) via Splunk dans un environnement SOC bancaire réel.</p>
+        <div class="project-tags">
+          <span class="tag">Splunk</span>
+          <span class="tag">802.1x</span>
+          <span class="tag">SOC</span>
+          <span class="tag">SIEM</span>
+          <span class="tag">Réseau</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section class="section" id="experiences">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Expériences</div>
+      <h2 class="section-title">Mes stages</h2>
+    </div>
+    <div class="xp-grid reveal">
+      <div class="xp-card">
+        <div class="xp-icon">🏦</div>
+        <div>
+          <div class="xp-role">Stage Cybersécurité · SOC Analyst</div>
+          <div class="xp-where">BRED Banque Populaire</div>
+        </div>
+        <span class="xp-badge">Cybersécurité</span>
+      </div>
+      <div class="xp-card">
+        <div class="xp-icon">💻</div>
+        <div>
+          <div class="xp-role">Stage Développement Web</div>
+          <div class="xp-where">MatelooKids</div>
+        </div>
+        <span class="xp-badge">Développement</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <h2 class="contact-title">Travaillons ensemble</h2>
+    <p class="contact-sub">Disponible pour des opportunités de stage, alternance ou projets collaboratifs.</p>
+    <div class="contact-links">
+      <a href="/cdn-cgi/l/email-protection#364c5f5a575876534e575b465a531855595b" class="contact-link white">✉ M'envoyer un mail</a>
+      <a href="https://github.com/" target="_blank" class="contact-link outline">⌥ GitHub</a>
+      <a href="https://linkedin.com/" target="_blank" class="contact-link outline">in LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-    Portfolio de Zilan © 2026
+  Conçu & développé par <span>Zilan</span> · 2026
 </footer>
 
-</body>
-</html>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* Cursor */
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .skill-pill, .project-card, .xp-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+  });
+
+  /* Nav scroll */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Reveal on scroll */
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach(r => r.classList.add('hidden'));
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.remove('hidden');
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  reveals.forEach(r => obs.observe(r));
+
+  /* Stagger children in grids */
+  document.querySelectorAll('.project
