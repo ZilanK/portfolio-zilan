@@ -8,54 +8,79 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background-color: #fff7f9;
+    background: #fff9fb;
     color: #333;
+    scroll-behavior: smooth;
 }
 
 header {
-    background-color: #f8dfe5;
+    background: linear-gradient(to right, #f8dfe7, #fceff3);
     text-align: center;
     padding: 50px 20px;
 }
 
+header h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
 nav {
-    background-color: white;
-    text-align: center;
+    background: white;
     padding: 15px;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
 }
 
 nav a {
-    margin: 15px;
+    margin: 0 15px;
     text-decoration: none;
     color: #b76e79;
     font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #e89cab;
 }
 
 section {
     max-width: 900px;
-    margin: 30px auto;
+    margin: 40px auto;
     background: white;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+}
+
+section:hover {
+    transform: translateY(-5px);
 }
 
 h2 {
     color: #b76e79;
-    border-bottom: 2px solid #f8dfe5;
-    padding-bottom: 10px;
 }
 
 .project {
-    background: #fff2f5;
+    background: #fff3f6;
     padding: 15px;
     margin-top: 15px;
-    border-radius: 8px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.project:hover {
+    background: #fde8ee;
+    transform: scale(1.02);
 }
 
 footer {
     text-align: center;
     padding: 20px;
-    background: #f8dfe5;
+    background: #f8dfe7;
+    margin-top: 40px;
 }
 </style>
 </head>
@@ -71,12 +96,12 @@ footer {
     <a href="#formation">Formation</a>
     <a href="#competences">Compétences</a>
     <a href="#projets">Projets</a>
-    <a href="#experience">Expériences</a>
+    <a href="#experiences">Expériences</a>
 </nav>
 
 <section id="profil">
     <h2>Qui suis-je</h2>
-    <p>Étudiante en deuxième année de BTS SIO option SLAM, je développe mes compétences en informatique à travers différents projets scolaires et professionnels, en développement web, mobile et cybersécurité.</p>
+    <p>Étudiante en deuxième année de BTS SIO option SLAM, je développe mes compétences en informatique à travers différents projets scolaires et professionnels.</p>
 </section>
 
 <section id="formation">
@@ -87,24 +112,8 @@ footer {
 
 <section id="competences">
     <h2>Compétences</h2>
-    <ul>
-        <li>PHP</li>
-        <li>Java</li>
-        <li>HTML / CSS</li>
-        <li>SQL</li>
-        <li>Kotlin</li>
-        <li>Python</li>
-    </ul>
-
-    <h2>Outils</h2>
-    <ul>
-        <li>Laravel</li>
-        <li>Android Studio</li>
-        <li>Git</li>
-        <li>GitHub</li>
-        <li>Splunk</li>
-        <li>Raspberry Pi</li>
-    </ul>
+    <p>PHP • Java • HTML • CSS • SQL • Kotlin • Python</p>
+    <p>Outils : Laravel, Android Studio, Git, GitHub</p>
 </section>
 
 <section id="projets">
@@ -113,40 +122,27 @@ footer {
     <div class="project">
         <h3>Viva Bio</h3>
         <p>Application web de gestion de stock et vente en ligne de produits bio.</p>
-        <p>Technologies utilisées : Laravel, PHP, MySQL, HTML, CSS.</p>
     </div>
 
     <div class="project">
         <h3>Comeat</h3>
-        <p>Application Android de réservation de repas permettant de consulter les menus et réserver facilement.</p>
-        <p>Technologies utilisées : Kotlin, Android Studio.</p>
+        <p>Application Android de réservation de repas.</p>
     </div>
 
     <div class="project">
         <h3>Station de décontamination USB</h3>
-        <p>Développement d’une station de détection de virus sur clés USB avec Raspberry Pi.</p>
-        <p>Technologies utilisées : Python, Raspberry Pi.</p>
+        <p>Projet Raspberry Pi avec Python pour détecter les virus sur clés USB.</p>
     </div>
-
 </section>
 
-<section id="experience">
+<section id="experiences">
     <h2>Expériences</h2>
-
-    <div class="project">
-        <h3>Stage cybersécurité - BRED Banque Populaire</h3>
-        <p>Analyse de logs, création de requêtes SPL et mise en place d’alertes de détection.</p>
-    </div>
-
-    <div class="project">
-        <h3>Stage développement web - MatelooKids</h3>
-        <p>Mise à jour de pages web via WordPress et Elementor.</p>
-    </div>
-
+    <p>Stage cybersécurité SOC - BRED Banque Populaire</p>
+    <p>Stage développement web - MatelooKids</p>
 </section>
 
 <footer>
-    <p>Contact : ton email</p>
+    Portfolio de Zilan © 2026
 </footer>
 
 </body>
