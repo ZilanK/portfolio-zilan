@@ -375,7 +375,7 @@
     <h1 class="hero-title">Bonjour, je suis <em>Zilan</em></h1>
     <p class="hero-sub">
       Étudiante en développement logiciel & applications métier.
-    </p>    </p>
+    </p>
     <div class="hero-cta">
       <a href="#projets" class="btn btn-primary">Voir mes projets</a>
       <a href="#contact" class="btn btn-ghost">Me contacter</a>
@@ -614,9 +614,9 @@
     <h2 class="contact-title">Travaillons ensemble</h2>
     <p class="contact-sub">Disponible pour des opportunités de stage, alternance ou projets collaboratifs.</p>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#364c5f5a575876534e575b465a531855595b" class="contact-link white">✉ M'envoyer un mail</a>
+      <a href="mailto:zilan@email.com" class="contact-link white">✉ M'envoyer un mail</a>
       <a href="https://github.com/" target="_blank" class="contact-link outline">⌥ GitHub</a>
-      <a href="https://linkedin.com/" target="_blank" class="contact-link outline">in LinkedIn</a>
+      <a href="https://fr.linkedin.com/in/zilan-kaymanli-578193373" target="_blank" class="contact-link outline">in LinkedIn</a>
     </div>
   </div>
 </section>
@@ -626,7 +626,7 @@
   Conçu & développé par <span>Zilan</span> · 2026
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   /* Cursor */
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
@@ -659,4 +659,11 @@
   reveals.forEach(r => obs.observe(r));
 
   /* Stagger children in grids */
-  document.querySelectorAll('.project
+  document.querySelectorAll('.projects-grid, .xp-grid').forEach(grid => {
+    Array.from(grid.children).forEach((child, i) => {
+      child.style.transitionDelay = (i * 0.1) + 's';
+    });
+  });
+</script>
+</body>
+</html>
