@@ -28,17 +28,7 @@
     overflow-x: hidden;
   }
 
-  /* ── CURSOR ── */
-  body { cursor: none; }
-  #cursor {
-    position: fixed; width: 12px; height: 12px;
-    background: var(--rose); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: transform 0.15s, background 0.3s, width 0.3s, height 0.3s;
-    mix-blend-mode: multiply;
-  }
-  #cursor.big { width: 40px; height: 40px; background: rgba(196,104,122,0.25); }
+
 
   /* ── NAV ── */
   nav {
@@ -68,8 +58,8 @@
     transform: scaleX(0); transform-origin: right;
     transition: transform 0.35s ease;
   }
-  .nav-links a:hover { color: var(--rose); }
-  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+  .nav-links a.active { color: var(--rose); }
+  .nav-links a.active::after { transform: scaleX(1); }
 
   /* ── HERO ── */
   #hero {
@@ -289,6 +279,29 @@
     background: var(--rose-light); color: var(--rose-deep); white-space: nowrap;
   }
 
+  /* ── VEILLE ── */
+  .veille-cta-block {
+    background: white; border-radius: 24px; padding: 56px 48px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(196,104,122,0.08);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .veille-icon { font-size: 48px; }
+  .veille-cta-title {
+    font-family: 'Playfair Display', serif; font-size: 26px; color: var(--ink);
+  }
+  .veille-cta-desc { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.7; }
+  .veille-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 36px; border-radius: 100px;
+    background: var(--rose); color: white;
+    font-size: 14px; font-weight: 500; text-decoration: none;
+    box-shadow: 0 8px 30px rgba(196,104,122,0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .veille-btn:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(196,104,122,0.45); }
+
   /* ── CONTACT ── */
   #contact {
     background: linear-gradient(135deg, var(--rose-deep) 0%, #b05060 100%);
@@ -326,7 +339,6 @@
     text-align: center; padding: 24px; font-size: 13px; color: var(--muted);
     background: var(--cream);
   }
-  footer span { color: var(--rose); }
 
   /* ── ANIMATIONS ── */
   @keyframes fadeUp {
@@ -345,12 +357,11 @@
     .profil-grid { grid-template-columns: 1fr; }
     .xp-card { flex-direction: column; align-items: flex-start; }
     .xp-badge { margin-left: 0; }
+    .veille-cta-block { padding: 36px 24px; }
   }
 </style>
 </head>
 <body>
-
-<div id="cursor"></div>
 
 <!-- NAV -->
 <nav id="navbar">
@@ -397,10 +408,10 @@
     <div class="profil-grid reveal">
       <div>
         <p class="profil-text">
-          Étudiante en deuxième année de BTS SIO option SLAM, je développe mes compétences à travers des projets concrets — des applications web aux outils de cybersécurité. J'aime relever des défis techniques tout en gardant l'utilisateur au centre de chaque décision.
+          Étudiante en BTS SIO option SLAM, j'ai eu la chance de travailler dans des environnements professionnels exigeants dès ma première année — d'un SOC bancaire à une startup. Ces expériences m'ont appris à m'adapter vite et à prendre des responsabilités concrètes.
         </p>
         <p class="profil-text" style="margin-top: 16px;">
-          Mon parcours mêle développement, mobilité et sécurité informatique, avec des expériences en stage qui m'ont confrontée à des environnements professionnels exigeants.
+          J'ai travaillé sur des projets variés — applications web, mobile, et outils de gestion — tout en découvrant la sécurité informatique depuis l'intérieur, avec de vrais outils utilisés en entreprise.
         </p>
       </div>
       <div class="profil-card">
@@ -439,7 +450,7 @@
         <div class="tl-dot"></div>
         <div class="tl-year">2024 — 2026</div>
         <div class="tl-title">BTS SIO — Option SLAM</div>
-        <div class="tl-sub">Services Informatiques aux Organisations · Développement web, mobile & cybersécurité</div>
+        <div class="tl-sub">Services Informatiques aux Organisations · Développement web & mobile</div>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
@@ -499,7 +510,8 @@
           <span class="tag">SQL</span>
           <span class="tag">Web</span>
         </div>
-        <a href="https://github.com/aurelien-ryt/VivaBioApp" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;font-weight:500;color:var(--rose);text-decoration:none;">⌥ Voir sur GitHub</a>
+        <a href="https://github.com/ZilanK/VivaBioApp" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;font-weight:500;color:var(--rose);text-decoration:none;">⌥ Voir sur GitHub</a>
+        <a href="https://github.com/ZilanK/VivaBioAppDocumentation" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:500;color:var(--rose);text-decoration:none;">⌥ Voir la documentation</a>
       </div>
       <div class="project-card">
         <div class="project-num">02</div>
@@ -511,6 +523,7 @@
           <span class="tag">Mobile</span>
         </div>
         <a href="https://github.com/ZilanK/Comeat" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-size:12px;font-weight:500;color:var(--rose);text-decoration:none;">⌥ Voir sur GitHub</a>
+        <a href="https://github.com/ZilanK/ComeatDocumentation" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;font-weight:500;color:var(--rose);text-decoration:none;">⌥ Voir la documentation</a>
       </div>
       <div class="project-card">
         <div class="project-num">03</div>
@@ -550,7 +563,10 @@
         <div class="xp-icon">🏦</div>
         <div>
           <div class="xp-role">Stage Cybersécurité · SOC Analyst</div>
-          <div class="xp-where">BRED Banque Populaire · Mai 2025 — Juillet 2025</div>
+          <div class="xp-where">BRED Banque Populaire · Juin 2025 — Juillet 2025 · Joinville-le-Pont</div>
+          <div style="margin-top:10px;font-size:13px;color:var(--muted);line-height:1.7;">
+            Analyse de logs via Splunk (proxy, firewall, sécurité applicative), création de requêtes SPL, mise en place d'une alerte 802.1X et déploiement d'une station de décontamination USB.
+          </div>
         </div>
         <span class="xp-badge">Cybersécurité</span>
       </div>
@@ -559,6 +575,9 @@
         <div>
           <div class="xp-role">Stage Développement Web</div>
           <div class="xp-where">MatelooKids · Janvier 2026 — Février 2026</div>
+          <div style="margin-top:10px;font-size:13px;color:var(--muted);line-height:1.7;">
+            Prise en main et modification de pages via WordPress et Elementor, adaptation des contenus en respectant les contraintes d'un site déjà en ligne.
+          </div>
         </div>
         <span class="xp-badge">Développement</span>
       </div>
@@ -573,36 +592,16 @@
       <div class="section-label">Veille Technologique</div>
       <h2 class="section-title">L'actu cyber que je suis</h2>
     </div>
-    <div class="projects-grid reveal">
-      <div class="project-card">
-        <div class="project-num">🎣</div>
-        <div class="project-title">Phishing & IA</div>
-        <p class="project-desc">L'intelligence artificielle permet désormais aux attaquants de personnaliser leurs messages à grande échelle et de contourner les filtres traditionnels. 60% des cyberattaques en France débutent par du phishing.</p>
-        <div class="project-tags">
-          <span class="tag">Phishing</span>
-          <span class="tag">IA</span>
-          <span class="tag">Ingénierie sociale</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-num">📋</div>
-        <div class="project-title">Directive NIS2</div>
-        <p class="project-desc">La directive européenne NIS2, dont la transposition française est attendue pour 2026, élargit les obligations de cybersécurité à de nombreuses entreprises et renforce la gestion des risques.</p>
-        <div class="project-tags">
-          <span class="tag">NIS2</span>
-          <span class="tag">Réglementation</span>
-          <span class="tag">UE</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-num">🔒</div>
-        <div class="project-title">Modèle Zero Trust</div>
-        <p class="project-desc">Le Zero Trust s'impose comme stratégie de sécurité réseau : "ne jamais faire confiance, toujours vérifier". Chaque accès est authentifié indépendamment de l'emplacement — en lien direct avec le protocole 802.1x.</p>
-        <div class="project-tags">
-          <span class="tag">Zero Trust</span>
-          <span class="tag">802.1x</span>
-          <span class="tag">Réseau</span>
-        </div>
+    <div class="reveal">
+      <div class="veille-cta-block">
+        <div class="veille-icon">🔐</div>
+        <div class="veille-cta-title">Cybersécurité & Phishing</div>
+        <p class="veille-cta-desc">
+          Je centralise ma veille sur Pearltrees autour du phishing et de ses évolutions : l'impact de l'IA sur les attaques, le quishing via QR code, les fausses alertes qui circulent sur GitHub, ou encore les bons réflexes en cas d'hameçonnage.
+        </p>
+        <a href="https://www.pearltrees.com/zilanka/cybersecurite-phishing/id103386531" target="_blank" class="veille-btn">
+          🌿 Consulter ma veille sur Pearltrees
+        </a>
       </div>
     </div>
   </div>
@@ -611,11 +610,11 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner reveal">
-    <h2 class="contact-title">Travaillons ensemble</h2>
-    <p class="contact-sub">Disponible pour des opportunités de stage, alternance ou projets collaboratifs.</p>
+    <h2 class="contact-title">Merci d'avoir visité mon portfolio.</h2>
+    <p class="contact-sub" style="margin-bottom:40px;">N'hésitez pas à me contacter.</p>
     <div class="contact-links">
-      <a href="mailto:zilan@email.com" class="contact-link white">✉ M'envoyer un mail</a>
-      <a href="https://github.com/" target="_blank" class="contact-link outline">⌥ GitHub</a>
+      <a href="/cdn-cgi/l/email-protection#344e5d58555a1a5f554d59555a585d1a475d5b745359555d581a575b59" class="contact-link white">✉ M'envoyer un mail</a>
+      <a href="https://github.com/ZilanK" target="_blank" class="contact-link outline">⌥ GitHub</a>
       <a href="https://fr.linkedin.com/in/zilan-kaymanli-578193373" target="_blank" class="contact-link outline">in LinkedIn</a>
     </div>
   </div>
@@ -623,22 +622,11 @@
 
 <!-- FOOTER -->
 <footer>
-  Conçu & développé par <span>Zilan</span> · 2026
+  © 2026
 </footer>
 
-<script>
-  /* Cursor */
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
-  });
-  document.querySelectorAll('a, button, .skill-pill, .project-card, .xp-card').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('big'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
-  });
-
-  /* Nav scroll */
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* Nav scroll */
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => {
     navbar.classList.toggle('scrolled', window.scrollY > 60);
@@ -658,12 +646,14 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
   reveals.forEach(r => obs.observe(r));
 
-  /* Stagger children in grids */
-  document.querySelectorAll('.projects-grid, .xp-grid').forEach(grid => {
-    Array.from(grid.children).forEach((child, i) => {
-      child.style.transitionDelay = (i * 0.1) + 's';
+  /* Section active dans la nav */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
     });
-  });
-</script>
-</body>
-</html>
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href'
